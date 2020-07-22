@@ -9,7 +9,7 @@ export default ({ deleteTask, toggleCompleted, tasks }) => {
                                            id={item.id}
                                            completed={item.completed}
                                            deleteTask={deleteTask}
-                                           toggleCompleted={toggleCompleted} />;
+                                 />;
   
   return (
     <FlatList

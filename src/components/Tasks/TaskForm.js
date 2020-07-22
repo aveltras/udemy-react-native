@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import {View, Button, TextInput, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {addTask} from '../../redux/actions';
 
-export default ({ onAddTask }) => {
+export default () => {
 
   const [title, setTitle] = useState("");
+  const dispatch = useDispatch();
 
   const onPress = () => {
     if (title.length) {
-      onAddTask(title);
+      dispatch(addTask(title));
       setTitle("");
     }
   };
