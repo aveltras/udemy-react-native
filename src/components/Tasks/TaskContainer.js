@@ -4,6 +4,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import TaskList from './TaskList';
 import TaskForm from './TaskForm';
 import TaskCounter from './TaskCounter';
+import FloatingButton from './../_Shared/FloatingButton';
 
 export default () => {
 
@@ -11,6 +12,8 @@ export default () => {
     { id: new Date().getTime(), title: "blabla", completed: false },
   ]);
 
+  const [isFormDisplayed, setIsFormDisplayed] = useState(false);
+  
   const addTask = (title) => {
     const newTask = { id: new Date().getTime(), title: title, completed: false };
     setTasks([newTask, ...tasks]);
@@ -31,18 +34,23 @@ export default () => {
   };
   
   return (
-    <View>
-      <TaskForm onAddTask={addTask} />
+    <View style={styles.container}>
+      {isFormDisplayed && <TaskForm onAddTask={addTask} />}
       <View style={styles.counters}>
-        <TaskCounter title="Tâches créées" count={tasks.length} />
-        <TaskCounter title="Tâches complétées" count={tasks.filter(task => task.completed).length} />
+        <TaskCounter title="Tâches créées" count={tasks.length} align="flex-start" />
+        <TaskCounter title="Tâches complétées" count={tasks.filter(task => task.completed).length} align="flex-end" />
       </View>
       <TaskList tasks={tasks} deleteTask={deleteTask} toggleCompleted={toggleTask} />
+      <FloatingButton label={isFormDisplayed ? "x": "+"} onPress={() => setIsFormDisplayed(!isFormDisplayed)} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: "relative"
+  },
   counters: {
     flexDirection: "row",
     justifyContent: "space-between",
